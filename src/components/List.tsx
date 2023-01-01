@@ -1,32 +1,36 @@
-import { Stack, Button } from '@mui/material'
-import type { RootState } from '../app/store'
-import { useSelector, useDispatch } from 'react-redux'
-import { deleteTask } from '../app/listSlice'
+import { Grid, Button } from "@mui/material";
+import { deleteTask } from "../app/listSlice";
+import type { RootState } from "../app/store";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useSelector, useDispatch } from "react-redux";
 
 const List = () => {
-  const tasks = useSelector((state: RootState) => state.list)
-  const dispatch = useDispatch()
+  const tasks = useSelector((state: RootState) => state.list);
+  const dispatch = useDispatch();
   return (
-    <Stack>
-      {
-      tasks.list.map((e) => {
-          return (
-            <div key={e.id} className='rounded w-1/2 bg-blue-500 flex justify-between items-center p-3 mx-auto my-3'>
+    <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+      {tasks.list.map((e) => {
+        return (
+          <Grid key={e.id} item xs={10} sm={8} md={7} lg={7}>
+            <div className="task rounded w-full flex justify-between items-center p-2">
               <span>{e.name}</span>
               <Button
+                startIcon={<DeleteIcon />}
                 variant="contained"
                 color="error"
+                size='small'
                 onClick={() => {
-                  dispatch(deleteTask(e.id))
+                  dispatch(deleteTask(e.id));
                 }}
               >
                 Delete
               </Button>
             </div>
-          );
-        })}
-    </Stack>
-  )
-}
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+};
 
-export default List
+export default List;
